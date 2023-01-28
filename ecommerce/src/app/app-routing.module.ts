@@ -14,6 +14,8 @@ import { ProductsingleComponent } from './productsingle/productsingle.component'
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { ShopComponent } from './shop/shop.component';
 import { SignupComponent } from './signup/signup.component';
+import {SingerAvatarComponent} from "./upload/singer-avatar/singer-avatar.component";
+import {AuthGuard} from "./security/auth.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,8 +30,9 @@ const routes: Routes = [
   {path: 'edit-address', component: EditAddressComponent},
   {path:'forgot-password', component: ForgotPasswordComponent},
   {path: 'orders', component: OrdersComponent},
-  {path: 'profile-detail', component: ProfileDetailsComponent},
+  {path: 'profile-detail', component: ProfileDetailsComponent, canActivate: [AuthGuard]},
   {path: 'cart', component: CartComponent},
+  {path: 'single-avatar', component: SingerAvatarComponent},
   {path:'**', component: ErrorComponent},
 ];
 

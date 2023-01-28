@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-// <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-// <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-// <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+import {TokenService} from "../service_common/token.service";
+import {Router} from "@angular/router";
+import {SignUpForm} from "../signup/_models/SignUpForm";
 
 @Component({
   selector: 'app-header',
@@ -10,4 +10,25 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+   checkLogin = false
+   urlAvatar!: string;
+   nameUser!: string;
+   constructor(private tokenService: TokenService,
+               private router: Router) {
+   }
+   ngOnInit(): void{
+          if(this.tokenService.getToken()){
+            this.checkLogin = true;
+            this.nameUser = this.tokenService.getName();
+            this.urlAvatar = this.tokenService.getAvatar();
+          }
+   }
+
+   logOut(){
+     console.log('logout')
+     localStorage.clear();
+     this.router.navigate(['']).then(()=>{
+       location.reload();
+     })
+   }
 }

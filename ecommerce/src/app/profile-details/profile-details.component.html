@@ -1,12 +1,13 @@
+<app-header></app-header>
 <section class="page-header">
-    <div class="overly"></div> 	
+    <div class="overly"></div>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="content text-center">
             <h1 class="mb-3">Profile</h1>
             <p>Hath after appear tree great fruitful green dominion moveth sixth abundantly image that midst of god day multiply you’ll which</p>
-  
+
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent justify-content-center">
               <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
@@ -18,92 +19,68 @@
       </div>
     </div>
   </section>
-  
-  
-  <section class="user-dashboard page-wrapper">
-    <div class="container">
-      <div class="row">
-          <div class="col-12 col-md-5 col-sm-12 col-lg-3">
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link" routerLink="/dashboard" >Dashboard</a>
-              </div>
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link" routerLink="/profile-details" >Orders</a>
-              </div>
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link" routerLink="/profile-details" >Downloads</a>
-              </div>
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link" routerLink="/profile-details" >Address</a>
-              </div>
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link active" routerLink="/profile-details" >Account</a>
-              </div>
-              <div class="nav flex-column nav-pills">
-                  <a class="nav-link"routerLink="/profile-details" >Log Out</a>
-              </div>
-          </div>
-  
-        <div class="col-12 col-md-7 col-sm-12 col-lg-9">
-        
-            
-  
-  
-  
-            <div class="tab-pane fade show active" id="settings" role="tabpanel" >
-              <div class="acccount-settings">
-                <h4 class="mb-4">Account information</h4>
-                <form action="#">
-                  <div class="form-row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label >First Name</label>
-                        <input type="text" class="form-control" placeholder="John">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label >Last Name</label>
-                        <input type="text" class="form-control" placeholder="Jas">
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="form-group mb-4">
-                    <label >Display name </label>
-                    <input type="text" class="form-control" placeholder="Jassa">
-                    <p class="mt-2"> This will be how your name will be displayed in the account section and in reviews</p>
-                  </div>
-                  <div class="form-group mb-4">
-                    <label >Email address </label>
-                    <input type="text" class="form-control" placeholder="therichposts@gmail.com">
-                  </div>
-                </form>
-  
-                <form action="#" class="mt-5">
-                  <h4>Password change</h4>
-  
-                  <div class="form-group">
-                    <label >Current password </label>
-                    <input type="text" class="form-control" placeholder="">
-                    
-                  </div>
-                  <div class="form-group">
-                    <label >New password</label>
-                    <input type="text" class="form-control" placeholder="">
-                  </div>
-                  <div class="form-group">
-                    <label >Confirm password</label>
-                    <input type="text" class="form-control" placeholder="">
-                  </div>
-  
-                  <a href="#" class="btn btn-dark">Save Changes</a>
-                </form>
-              </div>
-            </div>
-  
-         
-        </div>
+
+<div class="container">
+  <div class="row" style="margin-top: 20px">
+
+      <div class="col-4">
+        <mat-card style="margin: 50px 0">
+          <img src="{{urlAvt}}" style="height: 100%">
+          <input type="file" style="color: #00aced"  class="form-edit" (change)="onChangeFile($event)">
+        </mat-card>
       </div>
-    </div>
-  </section>
+
+      <div class="col-8" >
+        <mat-card style="margin: 50px 0">
+          <form class="form-edit" #f="ngForm" (ngSubmit)="f.form.valid&&ngSubmit()" novalidate>
+            <h2>Edit profile</h2>
+            <mat-error>{{status}}</mat-error>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Name</mat-label>
+              <input name="name" matInput placeholder="{{profileModel.fullName}}" [(ngModel)]="form.name" #name="ngModel" required minlength="6" maxlength="20">
+              <mat-error *ngIf="name.hasError('required')"> The name is required!</mat-error>
+              <mat-error *ngIf="name.hasError('minlength')"> The name must more than 6 character!</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Username</mat-label>
+              <input name="username" matInput placeholder="{{profileModel.userName}}" [(ngModel)]="form.username" #username="ngModel" required
+                     minlength="3" maxlength="20">
+              <mat-error *ngIf="username.hasError('required')"> The name is required!</mat-error>
+              <mat-error *ngIf="username.hasError('minlength')"> The name must more than 3 character!</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input name="email" matInput placeholder="{{profileModel.email}}" [(ngModel)]="form.email" [formControl]="emailFormControl" required>
+              <mat-error *ngIf="emailFormControl.hasError('required')"> The email is required!</mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('email')">Email not invalid! ex: laingocson007@gmail.com</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input name="password" [(ngModel)]="form.password" #password ="ngModel" matInput [type]="hide ? 'password' : 'text'" minlength="6" maxlength="20" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon color="accent" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="password.hasError('required')"> The password is required!</mat-error>
+              <mat-error *ngIf="password.hasError('minlength')"> The name must more than 6 character!</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Enter your password again</mat-label>
+              <input name="password_again" [(ngModel)]="password_again"  matInput [type]="hide ? 'password' : 'text'" minlength="6" maxlength="20" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon color="accent" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="password_again != form.password&& password_again"> The password does not match!</mat-error>
+              <mat-error *ngIf="!password_again">The password is required!</mat-error>
+            </mat-form-field>
+            <br>
+            <button style="margin-bottom: 20px" mat-raised-button color="primary">Save change</button>
+          </form>
+        </mat-card>
+      </div>
+  </div>
+</div>
+<app-footer></app-footer>

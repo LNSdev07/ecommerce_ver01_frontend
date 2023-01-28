@@ -21,8 +21,22 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
 import { HeaderShopComponent } from './shop/header-shop/header-shop.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderDashboardComponent } from './dashboard/header-dashboard/header-dashboard.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatInputModule} from "@angular/material/input";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import { MatButtonModule } from '@angular/material/button'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthInterceptor} from "./service_common/auth.interceptor";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../../environments/environment.prod";
+import { SingerAvatarComponent } from './upload/singer-avatar/singer-avatar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,17 +56,32 @@ import { FormsModule } from '@angular/forms';
     AddressComponent,
     EditAddressComponent,
     HeaderShopComponent,
-    HeaderDashboardComponent
+    HeaderDashboardComponent,
+    SingerAvatarComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SlickCarouselModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

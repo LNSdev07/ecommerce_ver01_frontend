@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12" style="margin-top: 20px">
+      <mat-card style="margin: 50px">
+            <input type="file" (change)="onChangeFile($event)">
+            <button (click)="upload()" mat-button color="primary">Upload image</button>
+
+        <div *ngIf="urlFile">
+          <img style="width: 300px; height: 360px" src="{{urlFile}}">
+        </div>
+
+      </mat-card>
+
+    </div>
+  </div>
+</div>
