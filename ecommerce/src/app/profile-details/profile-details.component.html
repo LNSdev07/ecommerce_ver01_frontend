@@ -57,6 +57,35 @@
               <mat-error *ngIf="emailFormControl.hasError('email')">Email not invalid! ex: laingocson007@gmail.com</mat-error>
             </mat-form-field>
             <br>
+
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>PhoneNumber</mat-label>
+              <input name="phonenumber" matInput placeholder="{{profileModel.phoneNumber}}" [(ngModel)]="form.phonenumber" #phonenumber="ngModel" required
+                     minlength="10" maxlength="20">
+              <mat-error *ngIf="phonenumber.hasError('required')"> The name is required!</mat-error>
+              <mat-error *ngIf="phonenumber.hasError('minlength')"> The name must more than 10 character!</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 500px" appearance="outline">
+              <mat-label>Address</mat-label>
+              <input name="address" matInput placeholder="{{profileModel.address}}" [(ngModel)]="form.address" #address="ngModel" required
+                     minlength="3" maxlength="200">
+              <mat-error *ngIf="address.hasError('required')"> The name is required!</mat-error>
+              <mat-error *ngIf="address.hasError('minlength')"> The name must more than 3 character!</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline" style="width: 69%">
+              <mat-label>Gender</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="food" placeholder="{{placeHodersGender}}">
+                <mat-option *ngFor="let item of gender" [value]="item.id">
+                  {{item.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p style="color: red">{{statusGender}}</p>
+            <br>
+
             <mat-form-field style="width: 500px" appearance="outline">
               <mat-label>Enter your password</mat-label>
               <input name="password" [(ngModel)]="form.password" #password ="ngModel" matInput [type]="hide ? 'password' : 'text'" minlength="6" maxlength="20" required>

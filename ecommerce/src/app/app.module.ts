@@ -36,6 +36,22 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment.prod";
 import { SingerAvatarComponent } from './upload/singer-avatar/singer-avatar.component';
+import { AdminComponent } from './admin/admin.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { QuanLyKhachHangComponent } from './admin/quan-ly-khach-hang/quan-ly-khach-hang.component';
+import { QuanLySanPhamComponent } from './admin/quan-ly-san-pham/quan-ly-san-pham.component';
+import { QuanLyThuChiComponent } from './admin/quan-ly-thu-chi/quan-ly-thu-chi.component';
+import { TaiKhoanAdminComponent } from './admin/tai-khoan-admin/tai-khoan-admin.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { ModalComponent } from './admin/quan-ly-san-pham/modal/modal.component';
+import {MdbModalModule} from 'mdb-angular-ui-kit/modal';
+import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
+import {MdbCheckboxModule} from "mdb-angular-ui-kit/checkbox";
+import { QuanLyLoaiSanPhamComponent } from './admin/quan-ly-loai-san-pham/quan-ly-loai-san-pham.component';
+import { ModalCategotyComponent } from './admin/quan-ly-loai-san-pham/modal-categoty/modal-categoty.component';
+import { ModalDeleteComponent } from './admin/quan-ly-loai-san-pham/modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +74,15 @@ import { SingerAvatarComponent } from './upload/singer-avatar/singer-avatar.comp
     HeaderShopComponent,
     HeaderDashboardComponent,
     SingerAvatarComponent,
+    AdminComponent,
+    QuanLyKhachHangComponent,
+    QuanLySanPhamComponent,
+    QuanLyThuChiComponent,
+    TaiKhoanAdminComponent,
+    ModalComponent,
+    QuanLyLoaiSanPhamComponent,
+    ModalCategotyComponent,
+    ModalDeleteComponent,
 
   ],
   imports: [
@@ -78,6 +103,13 @@ import { SingerAvatarComponent } from './upload/singer-avatar/singer-avatar.comp
     BrowserAnimationsModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    MatToolbarModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatDialogModule,
+    MdbModalModule,
+    MdbDropdownModule,
+    MdbCheckboxModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

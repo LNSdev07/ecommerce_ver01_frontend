@@ -1,14 +1,17 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {SignUpForm} from "./_models/SignUpForm";
 import {SignupService} from "./_services/signup.service";
 import {AngularFireStorage, AngularFireStorageReference} from "@angular/fire/compat/storage";
+
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
+
+
 export class SignupComponent {
   hide = true;
   form: any ={};
@@ -36,36 +39,53 @@ export class SignupComponent {
   success: any ={
     message :"success"
   }
-
-
-
+  selectedValue!: string;
 
    constructor(private signUpService: SignupService,
-               private afService: AngularFireStorage) {
+               private afService: AngularFireStorage,
+               private fb: FormBuilder) {
    }
 
-  ngSubmit() {
-    this.signUpForm = new SignUpForm(
-      this.form.email,
-      this.form.username,
-      this.form.password,
-      this.form.name,
-      this.urlFile
-    );
-    console.log(this.signUpForm);
+  gender =[
+    {id: 1, value: 'Nam'},
+    {id: 0, value: 'Nữ'}
+  ]
 
-    this.signUpService.signUp(this.signUpForm).subscribe(data =>{
-      console.log(data);
-      if(JSON.stringify(data) == JSON.stringify(this.error1)){
-        this.status = 'this username is existed!!!. Please try again'
-      }
-      if(JSON.stringify(data) == JSON.stringify(this.error2)){
-        this.status = 'this email is existed!!!. Please try again'
-      }
-      if(JSON.stringify(data) == JSON.stringify(this.success)){
-        this.status = 'success'
-      }
-    })
+  statusGender = ''
+
+
+  ngSubmit() {
+    if (!this.urlFile) {
+      this.urlFile = 'https://cdn3.iconfinder.com/data/icons/login-5/512/LOGIN_6-512.png';
+    }
+    if (isNaN(Number(this.selectedValue))) {
+      this.statusGender = 'The gender is required !';
+    } else {
+      this.signUpForm = new SignUpForm(
+        this.form.email,
+        this.form.username,
+        this.form.password,
+        this.form.name,
+        this.urlFile,
+        Number(this.selectedValue),
+        this.form.phonenumber,
+        this.form.address,
+      );
+      console.log(this.signUpForm);
+
+      this.signUpService.signUp(this.signUpForm).subscribe(data =>{
+        console.log(data);
+        if(JSON.stringify(data) == JSON.stringify(this.error1)){
+          this.status = 'this username is existed!!!. Please try again'
+        }
+        if(JSON.stringify(data) == JSON.stringify(this.error2)){
+          this.status = 'this email is existed!!!. Please try again'
+        }
+        if(JSON.stringify(data) == JSON.stringify(this.success)){
+          this.status = 'success'
+        }
+      })
+    }
   }
 
   onChangeFile($event: Event) {

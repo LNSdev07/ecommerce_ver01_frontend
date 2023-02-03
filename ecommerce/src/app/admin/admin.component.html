@@ -1,0 +1,33 @@
+<div class="row"></div>
+<p>
+  <mat-toolbar color="primary" style="margin-bottom: -17px">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+<div style="margin-top: 0">
+  <div class="row">
+    <div class="col-2" style="background-color: #00aced">
+      <ul>
+        <div><li><mat-icon>keyboard_arrow_right</mat-icon><a routerLink="/admin/quan-ly-khach-hang">Quản lý khách hàng</a></li></div>
+        <li><mat-icon>keyboard_arrow_right</mat-icon><a routerLink="/admin/quan-ly-loai-san-pham">Quản lý loại sản phẩm</a></li>
+        <li><mat-icon>keyboard_arrow_right</mat-icon><a routerLink="/admin/quan-ly-san-pham">Quản lý Sản phẩm</a></li>
+        <li><mat-icon>keyboard_arrow_right</mat-icon><a routerLink="/admin/quan-ly-thu-chi">Quản lý thu chi</a></li>
+        <li><mat-icon>keyboard_arrow_right</mat-icon><a routerLink="/admin/quan-ly-admin">Tài khoản admin</a></li>
+      </ul>
+    </div>
+    <div class="col-10" >
+    <router-outlet></router-outlet>
+    </div>
+</div>
+</div>
+<app-footer></app-footer>

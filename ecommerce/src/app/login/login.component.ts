@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
       )
       // console.log(this.signInForm);
       this.loginService.signIn(this.signInForm).subscribe(data =>{
-        // console.log(data)
-        if(data != undefined){
+        if(data.token){
+          console.log('vao day')
           this.tokenService.setToken(data.token);
           this.tokenService.setName(data.name);
           this.tokenService.setRoles(data.roles);
@@ -57,8 +57,15 @@ export class LoginComponent implements OnInit {
           })
         }
         // @ts-ignore
-        if(data.status === 202){
+        else if (data.status === 202){
               console.log('login fail')
+          this.status = 'Login failed! Please check your username or password!'
+        }
+        // @ts-ignore
+        else if(data.message =='locked'){
+          this.status = 'Your account has been locked by admin or is no longer in the system !'
+        }
+        else{
           this.status = 'Login failed! Please check your username or password!'
         }
       })

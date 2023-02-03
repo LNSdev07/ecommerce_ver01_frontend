@@ -31,6 +31,8 @@ export class ProfileDetailsComponent implements OnInit{
   status ='';
   private urlFile!: string;
 
+  placeHodersGender ='';
+
   error1 = 'nouser';
   error2 = 'noemail'
   success= 'success'
@@ -42,43 +44,57 @@ export class ProfileDetailsComponent implements OnInit{
               private route: Router) {
   }
 
+  gender =[
+    {id: 1, value: 'Nam'},
+    {id: 0, value: 'Nữ'}
+  ]
+
+  statusGender = ''
+  selectedValue: any;
+
   ngSubmit() {
     this.urlFile = this.checkChangeImage();
+    if (isNaN(Number(this.selectedValue))) {
+      this.statusGender = 'The gender is required !';
+    } else {
+      this.signUpForm = new SignUpForm(
+        this.form.email,
+        this.form.username,
+        this.form.password,
+        this.form.name,
+        this.urlFile,
+        Number(this.selectedValue),
+        this.form.phonenumber,
+        this.form.address,
+      );
+      console.log(this.signUpForm);
 
-    this.signUpForm = new SignUpForm(
-      this.form.email,
-      this.form.username,
-      this.form.password,
-      this.form.name,
-      this.urlFile
-    );
-    console.log(this.signUpForm);
+      this.profileService.changeInfoUser(this.signUpForm).subscribe(data =>{
+        console.log(data);
 
-    this.profileService.changeInfoUser(this.signUpForm).subscribe(data =>{
-      console.log(data);
+        if(JSON.stringify(data.message) == JSON.stringify(this.error1)){
+          this.status = 'this username is existed!!!. Please try again'
+          console.log('ton tai user')
+        }
+        else if(JSON.stringify(data.message) == JSON.stringify(this.error2)){
+          this.status = 'this email is existed!!!. Please try again'
+          console.log('ton tai email')
+        }
+        else if(JSON.stringify(data.message) == JSON.stringify(this.success)){
+          this.status = 'success';
+        }
+        else {
+          this.tokenService.setToken(data.token);
+          this.tokenService.setName(data.name);
+          this.tokenService.setRoles(data.roles);
+          this.tokenService.setAvatar(data.avatar)
 
-      if(JSON.stringify(data.message) == JSON.stringify(this.error1)){
-        this.status = 'this username is existed!!!. Please try again'
-        console.log('ton tai user')
-      }
-      else if(JSON.stringify(data.message) == JSON.stringify(this.error2)){
-        this.status = 'this email is existed!!!. Please try again'
-        console.log('ton tai email')
-      }
-      else if(JSON.stringify(data.message) == JSON.stringify(this.success)){
-        this.status = 'success';
-      }
-      else {
-        this.tokenService.setToken(data.token);
-        this.tokenService.setName(data.name);
-        this.tokenService.setRoles(data.roles);
-        this.tokenService.setAvatar(data.avatar)
-        
-        this.route.navigate(['/login']);
-        // location.reload();
-        console.log('vao day r')
-      }
-    })
+          this.route.navigate(['/login']);
+          // location.reload();
+          console.log('vao day r')
+        }
+      })
+    }
   }
 
 
@@ -89,7 +105,7 @@ export class ProfileDetailsComponent implements OnInit{
 
       this.profileService.getInforUse().subscribe(data =>{
         this.profileModel = data;
-        console.log(data)
+        this.placeHodersGender = data.gender == 1? 'Nam': 'Nữ';
       })
 
   }

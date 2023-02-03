@@ -16,6 +16,13 @@ import { ShopComponent } from './shop/shop.component';
 import { SignupComponent } from './signup/signup.component';
 import {SingerAvatarComponent} from "./upload/singer-avatar/singer-avatar.component";
 import {AuthGuard} from "./security/auth.guard";
+import {AdminComponent} from "./admin/admin.component";
+import {QuanLyKhachHangComponent} from "./admin/quan-ly-khach-hang/quan-ly-khach-hang.component";
+import {QuanLySanPhamComponent} from "./admin/quan-ly-san-pham/quan-ly-san-pham.component";
+import {QuanLyThuChiComponent} from "./admin/quan-ly-thu-chi/quan-ly-thu-chi.component";
+import {TaiKhoanAdminComponent} from "./admin/tai-khoan-admin/tai-khoan-admin.component";
+import {AdminGuard} from "./security/admin.guard";
+import {QuanLyLoaiSanPhamComponent} from "./admin/quan-ly-loai-san-pham/quan-ly-loai-san-pham.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -33,6 +40,25 @@ const routes: Routes = [
   {path: 'profile-detail', component: ProfileDetailsComponent, canActivate: [AuthGuard]},
   {path: 'cart', component: CartComponent},
   {path: 'single-avatar', component: SingerAvatarComponent},
+  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard],
+    children:[
+      {
+        path: 'quan-ly-khach-hang', component: QuanLyKhachHangComponent
+      },
+      {
+        path: 'quan-ly-san-pham', component: QuanLySanPhamComponent
+      },
+      {
+        path:'quan-ly-loai-san-pham', component: QuanLyLoaiSanPhamComponent
+      },
+      {
+        path: 'quan-ly-thu-chi', component: QuanLyThuChiComponent
+      },
+      {
+        path: 'quan-ly-admin', component: TaiKhoanAdminComponent
+      },
+      {path: '**', component: QuanLyKhachHangComponent}
+    ]},
   {path:'**', component: ErrorComponent},
 ];
 

@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h2 *ngIf="id == 0" class="modal-title" id="exampleModalLabel">Thêm mới danh mục</h2>
+  <h2 *ngIf="id != 0" class="modal-title" >Chỉnh sửa danh mục</h2>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="formAddCategory" >
+    <div class="mb-3 mt-3">
+      <label for="name_category" class="form-label"><strong style="color: #0d060e">Tên danh mục</strong></label>
+      <input type="text" class="form-control" id="name_category" placeholder="{{nameCategory}}" formControlName ="categoryName">
+    </div>
+
+    <div *ngIf="f.categoryName.invalid && (f.categoryName.dirty || f.categoryName.touched)">
+      <p *ngIf="f.categoryName.hasError('required')" style="color: red">Category name is required !</p>
+    </div>
+
+    <div class="mb-3">
+      <label for="comment" class="form-label"><strong style="color: #0d060e">Mô tả danh mục</strong></label>
+      <textarea placeholder="{{descriptionCategory}}" formControlName ="description" rows="4" cols="50" id="comment"></textarea>
+    </div>
+    <div *ngIf="f.description.invalid && (f.description.dirty || f.description.touched)">
+      <p *ngIf="f.description.hasError('required')" style="color: red">Description is required !</p>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+    Close
+  </button>
+  <button type="button" class="btn btn-primary" [disabled]="formAddCategory.invalid" (click)="addProduct()" >Save changes</button>
+</div>
