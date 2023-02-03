@@ -1,7 +1,6 @@
-<mat-card style="margin: 30px">
+<h2>Danh sách khách hàng</h2>
+<mat-card style="margin: 30px" >
    <div>
-     <h2>Danh sách khách hàng</h2>
-
      <mat-form-field appearance="outline" style="width: 50%">
        <mat-label>Search By FullName</mat-label>
        <input matInput [(ngModel)]="searchTerm">
@@ -9,7 +8,7 @@
      <button (click)="search()" mat-stroked-button color="accent"><mat-icon>search</mat-icon></button>
    </div>
 
-  <h1 *ngIf="!data">Không có dữ liệu khách hàng !</h1>
+  <h1 *ngIf="!data" style="color: black" class="title"><strong>Không có dữ liệu khách hàng !</strong></h1>
   <div *ngIf="data" class="ex1">
     <table class="table table-striped table-hover" >
       <thead>
