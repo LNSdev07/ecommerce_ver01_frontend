@@ -52,7 +52,10 @@ import {MdbCheckboxModule} from "mdb-angular-ui-kit/checkbox";
 import { QuanLyLoaiSanPhamComponent } from './admin/quan-ly-loai-san-pham/quan-ly-loai-san-pham.component';
 import { ModalCategotyComponent } from './admin/quan-ly-loai-san-pham/modal-categoty/modal-categoty.component';
 import { ModalDeleteComponent } from './admin/quan-ly-loai-san-pham/modal-delete/modal-delete.component';
-
+import {MatSliderModule} from "@angular/material/slider";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatMenuModule} from "@angular/material/menu";
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +112,11 @@ import { ModalDeleteComponent } from './admin/quan-ly-loai-san-pham/modal-delete
     MatDialogModule,
     MdbModalModule,
     MdbDropdownModule,
-    MdbCheckboxModule
+    MdbCheckboxModule,
+    MatSliderModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    NgxPaginationModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
