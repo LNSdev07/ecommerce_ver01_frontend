@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3 *ngIf="id == 0" class="modal-title" id="exampleModalLabel">Thêm mới discount</h3>
+  <h3 *ngIf="id != 0" class="modal-title" >Chỉnh sửa discount</h3>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <mat-card style="margin: 5px">
+    <form [formGroup]="formAddDisCount" >
+      <br>
+      <div class="row" style="margin: 5px">
+        <span><strong>Tên discount</strong></span>
+        <input formControlName =discountName type="text" class="form-control"  placeholder="{{discountName}}"/>
+      </div>
+      <div class="row" style="margin: 5px" *ngIf="f.discountName.invalid && (f.discountName.dirty || f.discountName.touched)">
+        <p *ngIf="f.discountName.hasError('required')" style="color: red">Discount name is required !</p>
+      </div>
+      <br>
+      <div class="row" style="margin: 5px">
+        <span><strong>Discount percent</strong></span>
+        <input formControlName =discountPercent type="number" min="0" max="100" value="10" class="form-control"  placeholder="{{discountPercent}} ( % )" />
+      </div>
+      <div class="row" style="margin: 5px" *ngIf="f.discountPercent.invalid && (f.discountPercent.dirty || f.discountPercent.touched)">
+        <p *ngIf="f.discountPercent.hasError('required')" style="color: red">Discount percent is required !</p>
+      </div>
+      <br>
+    </form>
+  </mat-card>
+</div>
+<div class="modal-footer">
+  <button   type="button" class="btn btn-secondary" (click)="modalRef.close()">
+    Close
+  </button>
+  <button [disabled]="formAddDisCount.invalid"  (click)="addColor()" type="button" class="btn btn-primary">Save changes</button>
+</div>

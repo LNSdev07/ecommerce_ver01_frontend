@@ -1,0 +1,91 @@
+<div class="row" style="margin-top: 10px">
+  <div class="col-9">
+    <h2>Quản lý Discount</h2>
+  </div>
+  <div class="col-3" >
+    <button style="float: right" (click)="refresh()" mat-raised-button color="primary" style="margin-top: 7px">Làm mới <mat-icon>refresh</mat-icon></button>
+  </div>
+</div>
+<mat-card style="margin: 30px">
+  <div class="row" style="margin-left: 20px">
+    <div class="col-3">
+      <button  class="btn btn-primary" (click)="openModal(0)" style="margin-top: 27px">Thêm mới discount</button>
+    </div>
+    <div class="col-3" [formGroup]="searchGroup">
+      <span><strong>Discount name</strong></span>
+      <div class="input-group mb-3" style="width: 80%; margin-top: -1%">
+        <input formControlName = searchTerm type="text" class="form-control"
+               aria-label="Recipient's username" aria-describedby="basic-addon2"
+               style="margin-top: 5px">
+      </div>
+    </div>
+    <div class="col-6" [formGroup]="filterGroup">
+
+      <div class="row">
+        <div class="col-6">
+
+          <span><strong>Min discount</strong></span>
+          <div class="input-group mb-3" style="width: 80%">
+            <input formControlName = minDis type="number" value="0" min ="0" max="100" class="form-control"
+                   aria-label="Recipient's username" aria-describedby="basic-addon2"
+                   style="margin-top: 5px">
+          </div>
+
+        </div>
+
+        <div class="col-6">
+          <span><strong>Max discount</strong></span>
+          <div class="input-group mb-3" style="width: 80%">
+            <input formControlName = maxDis  type="number" value="100" min ="0" max="100" class="form-control"
+                   aria-label="Recipient's username" aria-describedby="basic-addon2"
+                   style="margin-top: 5px">
+          </div>
+        </div>
+
+      </div>
+      </div>
+
+  </div>
+</mat-card>
+
+
+<mat-card style="margin: 30px">
+  <table class="table table-striped table-hover" >
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Discount name</th>
+      <th>Discount percent</th>
+      <th>Ngày tạo</th>
+      <th>Ngày cập nhật</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor=" let item of dataTable| paginate : {
+                  itemsPerPage: pageSize,
+                  currentPage: page,
+                  totalItems: count
+                } ; index as i" [class.active]="i == currentIndex">
+      <td>{{(page-1)*pageSize + i +1}}</td>
+      <td>{{item.discountName}}</td>
+      <td>{{item.discountPercent}}%</td>
+      <td>{{item.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+      <td>{{item.updatedDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+      <td><button (click)="openModal(item.id)" mat-raised-button color="primary"><mat-icon>edit</mat-icon>Sửa</button>
+        <button (click)="openModalDelete(item.discountName, item.id)"  mat-raised-button color="warn" style="margin-left: 2%"><mat-icon>delete</mat-icon>Xóa</button></td>
+    </tr>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation example" style="text-align: center">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      [responsive]="true"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </nav>
+
+
+</mat-card>
+

@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import {ModalComponent} from "./modal/modal.component";
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {IFilterView} from "./_models/filter.model";
-import {debounceTime, distinctUntilChanged, Subject, takeUntil} from "rxjs";
+import {debounceTime, distinctUntilChanged, Subject, Subscription, takeUntil} from "rxjs";
 import {ISearchView} from "./_models/search.model";
 import {ProductService} from "./_services/product.service";
 import {CostRequestPage, PageProductModel, QuantityRequestPage} from "./_models/pageproduct.model";
+import {CategoryService} from "../quan-ly-loai-san-pham/_services/category.service";
+import {pageRequestModel} from "../quan-ly-loai-san-pham/_models/pageRequest.model";
+import {MatDialog} from "@angular/material/dialog";
+import {AddProductModalComponent} from "./_modals/add-product-modal/add-product-modal.component";
 @Component({
   selector: 'app-quan-ly-san-pham',
   templateUrl: './quan-ly-san-pham.component.html',
   styleUrls: ['./quan-ly-san-pham.component.scss']
 })
-export class QuanLySanPhamComponent implements IFilterView, ISearchView{
+export class QuanLySanPhamComponent implements IFilterView, ISearchView, OnInit, OnDestroy {
 
   filterGroup!: FormGroup;
   searchGroup!: FormGroup;
@@ -21,17 +24,19 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
   count = 0;
 
   dataTable: any
-  modalRef: MdbModalRef<ModalComponent> | null = null;
+
 
   constructor(private modalService: MdbModalService,
               private fb: FormBuilder,
-              private productService: ProductService) {}
+              private productService: ProductService,
+              public dialog: MatDialog,
+              private categoryService: CategoryService) {}
   page = 1;
   pageSize = 6;
   pageSizes = [3, 6, 9];
   currentIndex = -1;
   private defautPageRequest = new PageProductModel('', 0,
-    1000, new CostRequestPage(0, 100000000), new QuantityRequestPage(0, 100000000));
+    1000000, new CostRequestPage(0, 100000000), new QuantityRequestPage(0, 100000000));
 
 
   ngOnInit(): void {
@@ -44,12 +49,12 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
       console.log(x)
     })
 
+    this.getCaterory();
+
   }
 
   openModal() {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { title: 'Lại Ngọc Sơn' },
-    });
+
   }
 
   filter(){
@@ -72,16 +77,20 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
       // @ts-ignore
       filter['quantityMax'] = quantityMax;
     }
-    console.log(filter)
-    console.log(this.searchGroup.controls['searchTerm'].value)
+
+    let pageReq = new PageProductModel(this.getParamSearch(), 0,
+      1000000, this.getParamCostFilter(),
+      this.getParamQuantityFilter());
+
+    this.retrieveData(pageReq);
   }
 
   filterForm(): void{
     this.filterGroup = this.fb.group({
       costMin: ['0'],
-      costMax: ['100'],
+      costMax: ['10000'],
       quantityMin: ['0'],
-      quantityMax: ['100']
+      quantityMax: ['10000']
     });
     this.filterGroup.controls['costMin'].valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -125,8 +134,9 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
 
   retrieveData(pageReq: PageProductModel){
     this.productService.findProduct(pageReq).subscribe(x =>{
-      console.log(x)
+      console.log(x);
       this.dataTable = x.data;
+      this.count = x.totalItems
     })
   }
 
@@ -148,8 +158,8 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
 
 
   search(searchTerm: string): void {
-    let pageReq = new PageProductModel(searchTerm, this.page-1,
-      this.pageSize, this.getParamCostFilter(),
+    let pageReq = new PageProductModel(searchTerm, 0,
+      1000000, this.getParamCostFilter(),
       this.getParamQuantityFilter());
 
     this.retrieveData(pageReq);
@@ -158,11 +168,36 @@ export class QuanLySanPhamComponent implements IFilterView, ISearchView{
 
   handlePageChange($event: number) {
     this.page = $event;
-  //   let pageReq = new PageProductModel(this.getParamSearch(), this.page-1,
-  //     this.pageSize, this.getParamCostFilter(),
-  //     this.getParamQuantityFilter());
-  //   console.log(pageReq)
-  //
-  //   this.retrieveData(pageReq);
   }
+
+  refresh() {
+    this.ngOnInit();
+  }
+
+  @ViewChild('modal', { read: ViewContainerRef })
+  entry!: ViewContainerRef;
+  sub!: Subscription;
+
+  dataCategories : any
+
+  getCaterory(){
+    let request = new pageRequestModel(0, this.pageSize, '');
+
+    this.categoryService.findCategory(request).subscribe(x =>{
+      this.dataCategories = x.data;
+      console.log(x.data)
+    })
+  }
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AddProductModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }

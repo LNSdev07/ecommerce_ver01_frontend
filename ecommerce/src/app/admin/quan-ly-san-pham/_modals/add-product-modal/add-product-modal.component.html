@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Thêm mới sản phẩm</h2>
+<mat-dialog-content >
+    <div class="row">
+      <div class="col-6">
+          <span>Tên sản phẩm</span>
+          <input type="text" class="form-control"  placeholder="Nhập tên sản phẩm"/>
+      </div>
+      <div class="col-6">
+        <span>Số lượng sản phẩm</span>
+        <input type="number" class="form-control"  placeholder="Số lượng"/>
+      </div>
+    </div>
+  <br>
+  <div class="row">
+    <div class="col-3">
+      <ng-select [items]="cities"
+                 bindLabel="name"
+                 placeholder="Select size">
+      </ng-select>
+    </div>
+    <div class="col-3">
+      <ng-select [items]="cities"
+                 bindLabel="name"
+                 placeholder="Select color">
+      </ng-select>
+    </div>
+    <div class="col-3">
+      <ng-select [items]="cities"
+                 bindLabel="name"
+                 placeholder="Select discount">
+      </ng-select>
+    </div>
+    <div class="col-3">
+      <ng-select [items]="cities"
+                 bindLabel="name"
+                 placeholder="Select category">
+      </ng-select>
+    </div>
+  </div>
+  <br>
+
+  <span style="text-align: center"> chọn ảnh sản phẩm</span>
+
+  <div class="row">
+    <div class="col-3" *ngFor="let item of arr">
+      <ng-select [items]="cities"
+                 bindLabel="name"
+                 placeholder="Select category">
+      </ng-select>
+    </div>
+  </div>
+
+  <p>                                                                                                                       </p>
+
+  <p>---------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------------------------------</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

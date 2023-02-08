@@ -1,0 +1,52 @@
+<div class="row" style="margin-top: 10px">
+  <div class="col-9">
+    <h2>Quản lý Size</h2>
+  </div>
+  <div class="col-3" >
+    <button style="float: right" (click)="refresh()" mat-raised-button color="primary" style="margin-top: 7px">Làm mới <mat-icon>refresh</mat-icon></button>
+  </div>
+</div>
+<mat-card style="margin: 30px">
+  <div class="row" style="margin-left: 20px">
+    <div class="col-4">
+      <button class="btn btn-primary" (click)="openModal(0)" style="margin-top: 10px">Thêm mới size</button>
+    </div>
+    <div class="col-8" [formGroup]="searchGroup">
+      <div class="input-group mb-3" style="width: 70%; margin-top: 5px">
+        <input formControlName = searchTerm type="text" class="form-control"  placeholder="Search by sizeName"
+               aria-label="Recipient's username" aria-describedby="basic-addon2"
+        style="margin-top: 5px">
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+
+<mat-card style="margin: 30px">
+  <table class="table table-striped table-hover" >
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Size code</th>
+      <th>Tên size</th>
+      <th>Ngày tạo</th>
+      <th>Ngày cập nhật</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of dataTable; index as i">
+      <td>{{i+1}}</td>
+      <td>{{item.sizeCode}}</td>
+      <td>{{item.sizeName}}</td>
+      <td>{{item.createdDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+      <td>{{item.updatedDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+      <td><button (click)="openModal(item.id)" mat-raised-button color="primary"><mat-icon>edit</mat-icon>Sửa</button>
+        <button (click)="openModalDelete(item.sizeName, item.id)"  mat-raised-button color="warn" style="margin-left: 2%"><mat-icon>delete</mat-icon>Xóa</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</mat-card>
+

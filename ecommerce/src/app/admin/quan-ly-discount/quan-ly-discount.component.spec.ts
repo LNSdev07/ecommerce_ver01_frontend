@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from './modal.component';
+import { QuanLyDiscountComponent } from './quan-ly-discount.component';
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+describe('QuanLyDiscountComponent', () => {
+  let component: QuanLyDiscountComponent;
+  let fixture: ComponentFixture<QuanLyDiscountComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalComponent ]
+      declarations: [ QuanLyDiscountComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalComponent);
+    fixture = TestBed.createComponent(QuanLyDiscountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

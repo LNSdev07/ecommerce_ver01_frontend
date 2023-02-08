@@ -45,7 +45,6 @@ import { TaiKhoanAdminComponent } from './admin/tai-khoan-admin/tai-khoan-admin.
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import { ModalComponent } from './admin/quan-ly-san-pham/modal/modal.component';
 import {MdbModalModule} from 'mdb-angular-ui-kit/modal';
 import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
 import {MdbCheckboxModule} from "mdb-angular-ui-kit/checkbox";
@@ -56,6 +55,17 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatMenuModule} from "@angular/material/menu";
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { QuanLySizeComponent } from './admin/quan-ly-size/quan-ly-size.component';
+import { QuanLyColorComponent } from './admin/quan-ly-color/quan-ly-color.component';
+import { QuanLyDiscountComponent } from './admin/quan-ly-discount/quan-ly-discount.component';
+import { SizemodalComponent } from './admin/quan-ly-size/sizemodal/sizemodal.component';
+import { SizemodalDeleteComponent } from './admin/quan-ly-size/sizemodal-delete/sizemodal-delete.component';
+import { ColorModalComponent } from './admin/quan-ly-color/_modal/color-modal/color-modal.component';
+import { DeleteColorModalComponent } from './admin/quan-ly-color/_modal/delete-color-modal/delete-color-modal.component';
+import { DiscountModalComponent } from './admin/quan-ly-discount/_modal/discount-modal/discount-modal.component';
+import { DeleteDiscountModalComponent } from './admin/quan-ly-discount/_modal/delete-discount-modal/delete-discount-modal.component';
+import { AddProductModalComponent } from './admin/quan-ly-san-pham/_modals/add-product-modal/add-product-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,10 +92,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
     QuanLySanPhamComponent,
     QuanLyThuChiComponent,
     TaiKhoanAdminComponent,
-    ModalComponent,
     QuanLyLoaiSanPhamComponent,
     ModalCategotyComponent,
     ModalDeleteComponent,
+    QuanLySizeComponent,
+    QuanLyColorComponent,
+    QuanLyDiscountComponent,
+    SizemodalComponent,
+    SizemodalDeleteComponent,
+    ColorModalComponent,
+    DeleteColorModalComponent,
+    DiscountModalComponent,
+    DeleteDiscountModalComponent,
+    AddProductModalComponent,
 
   ],
   imports: [
@@ -116,7 +135,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatSliderModule,
     MatProgressBarModule,
     MatMenuModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

@@ -2,18 +2,21 @@
   <div class="row"  >
     <div class="col-9">
       <h1 style="margin-top: 5px">Danh sách sản phẩm</h1>
+      <button mat-raised-button color="primary" style="margin-top: 7px; margin-left: 30px" (click)="openDialog()">Thêm sản phẩm</button>
     </div>
     <div class="col-3">
-      <button mat-raised-button color="primary" style="margin-top: 7px" (click)="openModal()">Thêm sản phẩm</button>
+      <button mat-raised-button color="primary" style="margin-top: 7px" (click)="refresh()">Làm mới <mat-icon>refresh</mat-icon></button>
     </div>
   </div>
   <mat-card style="margin: 30px">
     <div class="row" >
-      <div class="col-4" [formGroup]="searchGroup" >
-        <mat-form-field appearance="fill">
-          <mat-label>Tên sản phẩm</mat-label>
-          <input matInput formControlName = searchTerm >
-        </mat-form-field>
+      <div class="col-3" [formGroup]="searchGroup" style="margin-left: 3px" >
+        <span>Tên sản phẩm</span>
+        <div class="input-group mb-3" style="width: 80%; margin-top: -1%">
+          <input formControlName = searchTerm type="text" class="form-control"
+                 aria-label="Recipient's username" aria-describedby="basic-addon2"
+                 style="margin-top: 5px">
+        </div>
       </div>
       <div class="col-4" [formGroup]="filterGroup">
         <label>Giá tiền sản phẩm</label>
@@ -64,7 +67,7 @@
           </mat-menu>
 
         </td>
-        <td>{{i+1}}</td>
+        <td>{{(page-1)*pageSize + i +1}}</td>
         <td>{{item.productName}}</td>
         <td>{{item.cost}}</td>
         <td>{{item.quantity}}</td>
@@ -85,5 +88,6 @@
       ></pagination-controls>
     </nav>
   </mat-card>
+
 </div>
 

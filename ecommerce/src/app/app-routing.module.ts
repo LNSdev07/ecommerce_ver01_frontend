@@ -23,6 +23,9 @@ import {QuanLyThuChiComponent} from "./admin/quan-ly-thu-chi/quan-ly-thu-chi.com
 import {TaiKhoanAdminComponent} from "./admin/tai-khoan-admin/tai-khoan-admin.component";
 import {AdminGuard} from "./security/admin.guard";
 import {QuanLyLoaiSanPhamComponent} from "./admin/quan-ly-loai-san-pham/quan-ly-loai-san-pham.component";
+import {QuanLySizeComponent} from "./admin/quan-ly-size/quan-ly-size.component";
+import {QuanLyColorComponent} from "./admin/quan-ly-color/quan-ly-color.component";
+import {QuanLyDiscountComponent} from "./admin/quan-ly-discount/quan-ly-discount.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -56,6 +59,15 @@ const routes: Routes = [
       },
       {
         path: 'quan-ly-admin', component: TaiKhoanAdminComponent
+      },
+      {
+        path: 'quan-ly-size', component: QuanLySizeComponent
+      },
+      {
+        path: 'quan-ly-color', component: QuanLyColorComponent
+      },
+      {
+        path: 'quan-ly-discount', component: QuanLyDiscountComponent
       },
       {path: '**', component: QuanLyKhachHangComponent}
     ]},
